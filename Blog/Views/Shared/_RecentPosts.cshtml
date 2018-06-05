@@ -1,0 +1,25 @@
+﻿@using Blog.Helpers
+
+
+<div class="mini-posts">
+
+    <!-- Mini Post -->
+
+    @foreach (var post in Utilities.GetRecentPosts())
+    {
+        <article class="mini-post">
+            <header id="recentposts">
+                @if (post.MediaURL != null)
+                {
+                    <img class="img-responsive" id="recentpic" src="@post.MediaURL" alt="" />
+                }
+
+                <h3>@Html.ActionLink(post.Title, "Details", "BlogPosts", new { slug = post.Slug }, null)</h3>
+                @{
+                    var recentDate = post.Created.ToString().Split(' ')[0];
+                }
+                <time class="published">@recentDate</time>
+            </header>
+        </article>
+    }
+</div>

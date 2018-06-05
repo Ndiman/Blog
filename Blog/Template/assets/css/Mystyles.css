@@ -1,0 +1,56 @@
+﻿#recentposts {
+    background-color: #bdbdbd;
+    color: white;
+}
+#indexpic {
+    max-height: 75px;
+    max-width: 200px;
+    float: left;
+    padding-right: 20px;
+}
+#recentpic {
+    max-height: 50px;
+    max-width: 50px;
+    float: left;
+    padding-right: 10px;
+}
+#detailpic {
+    max-height: 300px;
+    max-width: 1500px;
+    float: left;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+#footer {
+    clear: left;
+}
+#editbtn {
+    /*padding-left: 500px;*/
+    align-items: flex-end;
+}
+#cmtpost {
+    color: #5e5e5e;
+    font-size:xx-small;
+    font-style: italic;
+}
+#username {
+    color: #2EBA68;
+}
+.deletename {
+    color: #2eba68;
+    font-weight: bold;
+}
+.commentinfo {
+    font-weight: bold;
+    color: #383838;
+}
+/*article .published {
+    padding-right: 30px;
+}*/
+#socialLoginForm {
+    padding-left: 200px;
+}
+#pagebtns {
+    color: #2EBA68;
+    
+}

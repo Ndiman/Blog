@@ -1,0 +1,165 @@
+﻿@using Blog.Helpers
+
+<!DOCTYPE HTML>
+<!--
+    Future Imperfect by HTML5 UP
+    html5up.net |
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Nicole's tech blog</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="icon"
+          type="image/x-icon"
+          href="~/Template/img/favicon.ico" />
+
+    <link rel="stylesheet" href="~/Template/assets/css/main.css" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link href="~/Template/assets/css/Mystyles.css" rel="stylesheet" />
+</head>
+<body id="body">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <h1><a href="http://ndiportfolio.azurewebsites.net/">Nicole Iman</a></h1>
+            <nav class="links">
+                <ul>
+                    <li>@Html.Partial("_LoginPartial")</li>
+                    <li>@Html.ActionLink("Home", "Index", "BlogPosts")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("New Post", "Create")
+                        }
+                    </li>
+                </ul>
+            </nav>
+            <nav class="main">
+                <ul>
+                    <li class="search">
+                        <a class="fa-search" href="#search">Search</a>
+                        <form id="search" method="get" action="#">
+                            <input type="text" name="searchStr" placeholder="Search" />
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main">
+            @RenderBody()
+        </div>
+
+        <!-- Sidebar -->
+        <section id="sidebar">
+
+            <!-- Intro -->
+            <section id="intro">
+                <a class="logo"><img src="~/Template/img/Michi.jpg" alt="" /></a>
+                <header>
+                    <h2><a href="@Url.Action("Index", "BlogPosts")">My tech blog</a></h2>
+                    <p>Attempting to learn how to code</p>
+                </header>
+            </section>
+
+            <!-- Mini Posts -->
+            <section>
+                @Html.Partial("_RecentPosts")
+            </section>
+
+            <!-- Posts List -->
+            @*<section>
+                    <ul class="posts">
+                        <li>
+                            <article>
+                                <header>
+                                    <h3><a href="#">Lorem ipsum fermentum ut nisl vitae</a></h3>
+                                    <time class="published" datetime="2015-10-20">October 20, 2015</time>
+                                </header>
+                                <a href="#" class="image"><img src="~/Template/images/pic08.jpg" alt="" /></a>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <header>
+                                    <h3><a href="#">Convallis maximus nisl mattis nunc id lorem</a></h3>
+                                    <time class="published" datetime="2015-10-15">October 15, 2015</time>
+                                </header>
+                                <a href="#" class="image"><img src="~/Template/images/pic09.jpg" alt="" /></a>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <header>
+                                    <h3><a href="#">Euismod amet placerat vivamus porttitor</a></h3>
+                                    <time class="published" datetime="2015-10-10">October 10, 2015</time>
+                                </header>
+                                <a href="#" class="image"><img src="~/Template/images/pic10.jpg" alt="" /></a>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <header>
+                                    <h3><a href="#">Magna enim accumsan tortor cursus ultricies</a></h3>
+                                    <time class="published" datetime="2015-10-08">October 8, 2015</time>
+                                </header>
+                                <a href="#" class="image"><img src="~/Template/images/pic11.jpg" alt="" /></a>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <header>
+                                    <h3><a href="#">Congue ullam corper lorem ipsum dolor</a></h3>
+                                    <time class="published" datetime="2015-10-06">October 7, 2015</time>
+                                </header>
+                                <a href="#" class="image"><img src="~/Template/images/pic12.jpg" alt="" /></a>
+                            </article>
+                        </li>
+                    </ul>
+                </section>*@
+
+            <!-- About -->
+            <section class="blurb">
+                <h2>About</h2>
+                <p>Have you ever just wanted to switch careers entirely? You see the deadend looming ahead of your current job and wonder how you missed the last turn before deadend-ville? That's me. Except I've done a 3 point turn to find that last crossroads. Let's find out if it takes me anywhere.</p>
+                <ul class="actions">
+                    <li><a href="@Url.Action("About", "Home")" class="button">Learn More</a></li>
+                </ul>
+            </section>
+
+            <!-- Footer -->
+            <section id="footer">
+                    @*<ul class="icons">
+                        <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+                        <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+                        <li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+                        <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+                        <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+                    </ul>*@
+                    <p class="copyright">&copy; Nicole Iman 2018</p>
+                </section>
+
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/Template/assets/js/jquery.min.js"></script>
+    <script src="~/Template/assets/js/skel.min.js"></script>
+    <script src="~/Template/assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="~/Template/assets/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

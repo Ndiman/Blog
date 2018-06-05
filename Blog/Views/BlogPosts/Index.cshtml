@@ -1,0 +1,75 @@
+﻿@using Blog.Helpers
+@using PagedList;
+@using PagedList.Mvc;
+@*@using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+    {
+        <div class="controls controls-row search-row">
+            <input id="searchStr" name="searchStr" class="input-block-level" type="text" placeholder="Search" />
+            <button id="searchStr" name="searchStr" class="btn btn-success" type="submit">
+                <i class="icon-search"></i>
+            </button>
+        </div>
+    }*@
+
+@model IPagedList<Blog.Models.BlogPost>
+
+
+@*@if(User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("New Post", "Create")
+    }*@
+@*@if(User.IsInRole("Admin") || User.IsInRole("Moderator"))*@
+
+@*@if(User.Identity.IsAuthenticated)*@
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@foreach (var item in Model.OrderByDescending(b => b.Created))
+{
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                @if (item.MediaURL != null)
+                {
+                    <img class="img-responsive" id="indexpic" src="@item.MediaURL" alt="" />
+                }
+                <h2><a href="@Url.Action("Details", new { slug = item.Slug })">@item.Title</a></h2>
+            </div>
+            <div class="meta">
+                <time class="published">@item.Created.DateTime.ToString("MMMM dd, yyyy")</time>
+                <a href="@Url.Action("About", "Home")" class="author"><span class="name">Nicole Iman</span><img src="~/Template/img/mahface.png" alt="" /></a>
+            </div>
+        </header>
+        <footer>
+
+            <ul class="actions">
+                <li><h5>@Html.Raw(@Utilities.MakeAbstract(item.Body))</h5></li>
+            </ul>
+            <ul class="stats">
+                <li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.Action("Edit", new { slug = item.Slug })" class="button big">Edit</a>
+                    }
+                </li>
+            </ul>
+        </footer>
+    </article>
+
+    <!-- Post -->
+}
+<!-- Pagination -->
+<ul class="actions pagination">
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+    <li id="pagebtns">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+    </li>
+    
+</ul>
+
+@*<ul class="actions pagination">
+        <li><a href="" class="disabled button big previous">Previous Page</a></li>
+        <li><a href="#" class="button big next">Next Page</a></li>
+    </ul>*@

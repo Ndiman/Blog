@@ -1,0 +1,139 @@
+﻿@model Blog.Models.BlogPost
+
+<!-- Post -->
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="#">@Model.Title</a></h2>
+        </div>
+        <div class="meta">
+            <time class="published">@Model.Created.DateTime.ToString("MMMM dd, yyyy")</time>
+            <a href="#" class="author"><span class="name">Nicole Iman</span><img src="~/Template/img/mahface.png" alt="" /></a>
+        </div>
+    </header>
+    <div>
+        @if (Model.MediaURL != null)
+        {
+            <img class="img-responsive" id="detailpic" src="@Model.MediaURL" alt="" />
+        }
+        <p>@Html.Raw(Model.Body)</p>
+    </div>
+    <footer id="footer">
+        <ul class="actions">
+            <li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("Edit", new { slug = Model.Slug })" class="button small">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = Model.Id })" class="button small">Delete</a>
+                }
+            </li>
+        </ul>
+        @*<ul class="stats">
+            <li><a href="#">General</a></li>
+            <li><a href="#" class="icon fa-heart">28</a></li>
+            <li><a href="#" class="icon fa-comment">128</a></li>
+        </ul>*@
+    </footer>
+</article>
+<ul class="actions pagination">
+    <li><a href="@Url.Action("Index", "BlogPosts")" class="button small">Back to list</a></li>
+</ul>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
+        @using (Html.BeginForm("Create", "Comments", FormMethod.Post, new { @class = "form", role = "dialog" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Slug)
+            @Html.Hidden("PostId", Model.Id)
+
+            <div class="container">
+                <h2>Comments</h2>
+                <p>Feel free to leave a comment below</p>
+                <form>
+                    <div class="form-group">
+                        <label for="comment">Comment:</label>
+                        <textarea name="Body" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="button small" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+}
+
+
+    <hr>
+@foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+{
+    
+    <div class="media">
+        <div class="media-left">
+            @*<img src="img_avatar1.png" class="media-object" style="width:60px">*@
+        </div>
+        <div class="media-body">
+            @{
+                var commentDate = comment.Created.ToString().Split(' ')[0];
+            }
+            <h3 class="media-heading" id="username">@comment.Author.DisplayName <span id="cmtpost">posted on: @commentDate</span></h3>
+            
+            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+            {
+            <div>
+                @using (Html.BeginForm("Edit", "Comments", FormMethod.Post, new { @class = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Slug", Model.Slug)
+                    @Html.Hidden("Created", comment.Created)
+                    @Html.Hidden("AuthorId", comment.AuthorId)
+                    @Html.Hidden("PostId", Model.Id)
+                    @Html.Hidden("Id", comment.Id)
+
+                    <textarea name="Body" rows="1">@comment.Body</textarea>
+                    <textarea name="UpdateReason" rows="1" placeholder="Reason for edit">@comment.UpdateReason</textarea>
+                    <input type="submit" value="Edit" class="button small" />
+                    <a href="@Url.Action("Delete", "Comments", new { id = comment.Id })" class="button small">Delete</a>
+                }
+            </div>
+                
+            }
+            else
+            {
+                <p>@comment.Body</p>
+            }
+        </div>
+    </div>
+    <hr>
+}
+
+
+
+
+
+
+
+
+
+@*utility class with function -> public String Make Abstract (string body)
+    return body.split('')[0];
+
+    then strip out html tags
+
+    abstract property is more clean*@
+
+@* @using(Html.BeginForm())
+    @using(Html.BeginForm("Create", "Comments", FormMethod.Post, new {...}))
+
+    @Html.Hidden("Posted", model.Id)
+
+    submit button*@
+
+@* var createdDate = item.Created.ToString().Split(' '); 
+    
+    @createdDate*@
